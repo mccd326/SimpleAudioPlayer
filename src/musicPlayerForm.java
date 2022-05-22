@@ -23,7 +23,7 @@ public class musicPlayerForm extends JFrame {
     private JLabel LoadState;
     private JLabel Info;
     private JLabel LoadInfo;
-    private JButton setToFalseButton;
+    private JButton ResetLoadStateButton;
     private boolean loaded;
 
 
@@ -71,22 +71,32 @@ public class musicPlayerForm extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 filepath = String.valueOf(filepathTextField.getText());
-                if (loaded == true){
-                    player.clip.stop();
-                    player.clip.setMicrosecondPosition(0);
-                    clipTimePosition = 0;
+                if (loaded == true) {
+                    try {
+                        player.clip.stop();
+                        player.clip.setMicrosecondPosition(0);
+                        clipTimePosition = 0;
+                    } catch (Exception ex) {
+                    }
                 }
-                LoadState.setText("Loaded");
-                player.loadMusic(filepath);
-                LoadState.setText("Loaded");
                 loaded = true;
+                try {
+                    player.loadMusic(filepath);
+                    LoadState.setText(String.valueOf(loaded));
+                } catch (Exception ex) {
+                    System.out.println("Loading failed!");
+                    LoadState.setText("Loading failed!");
+                }
+
+
             }
         });
 
-        setToFalseButton.addActionListener(new ActionListener() {
+        ResetLoadStateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 loaded = false;
+                LoadState.setText("Not Loaded");
             }
         });
     }
