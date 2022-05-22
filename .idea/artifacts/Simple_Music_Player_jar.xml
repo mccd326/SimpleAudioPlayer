@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Simple_Music_Player:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Simple_Music_Player_jar</output-path>
+    <root id="archive" name="Simple_Music_Player.jar">
+      <element id="module-output" name="Simple_Music_Player" />
+    </root>
+  </artifact>
+</component>
