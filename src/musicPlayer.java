@@ -8,29 +8,38 @@ public class musicPlayer {
 
     static musicPlayer player = new musicPlayer();
 
-    private musicPlayer(){
+    private musicPlayer() {
 
     }
 
-    public static musicPlayer getInstance(){
+    public static musicPlayer getInstance() {
         return player;
     }
 
-    public static void loadMusic(String filepath){
-        try
-        {
+    public static void loadMusic(String filepath) {
+        try {
             File musicPath = new File(filepath);
-            if(musicPath.exists())
-            {
+            if (musicPath.exists()) {
                 AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
                 clip = AudioSystem.getClip();
                 clip.open(audioInput);
                 System.out.println("Initialized");
             }
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("ERROR" + e);
+        }
+    }
+
+    public static void loadFile(File file) {
+        try {
+            if (file.exists()) {
+                AudioInputStream audioInput = AudioSystem.getAudioInputStream(file);
+                clip = AudioSystem.getClip();
+                clip.open(audioInput);
+                System.out.println("Initialized");
+            }
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
         }
     }
 

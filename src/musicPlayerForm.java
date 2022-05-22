@@ -2,6 +2,7 @@ import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class musicPlayerForm extends JFrame {
     static musicPlayer player = musicPlayer.getInstance();
@@ -10,7 +11,6 @@ public class musicPlayerForm extends JFrame {
     static boolean isPlaying = true;
     static boolean isLooping = false;
     private JPanel PlayerPanel;
-    private JTextField filepathTextField;
     private JButton loadButton;
     private JButton playButton;
     private JButton pauseButton;
@@ -28,6 +28,7 @@ public class musicPlayerForm extends JFrame {
 
 
     public musicPlayerForm() {
+        JFileChooser fileChooser = new JFileChooser();
         loaded = false;
         setContentPane(PlayerPanel);
         pauseButton.addActionListener(new ActionListener() {
@@ -70,7 +71,28 @@ public class musicPlayerForm extends JFrame {
         loadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                filepath = String.valueOf(filepathTextField.getText());
+                fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+                int result = fileChooser.showOpenDialog(PlayerPanel);
+                if (result == JFileChooser.APPROVE_OPTION){
+                    File selectedFile = fileChooser.getSelectedFile();
+                    if (loaded == true) {
+                        try {
+                            player.clip.stop();
+                            player.clip.setMicrosecondPosition(0);
+                            clipTimePosition = 0;
+                        } catch (Exception ex) {
+                        }
+                    }
+                    loaded = true;
+                    try {
+                        player.loadFile(selectedFile);
+                        LoadState.setText(String.valueOf(loaded));
+                    } catch (Exception ex) {
+                        System.out.println("Loading failed!");
+                        LoadState.setText("Loading failed!");
+                    }
+                }
+                /*filepath = String.valueOf(filepathTextField.getText());
                 if (loaded == true) {
                     try {
                         player.clip.stop();
@@ -86,7 +108,7 @@ public class musicPlayerForm extends JFrame {
                 } catch (Exception ex) {
                     System.out.println("Loading failed!");
                     LoadState.setText("Loading failed!");
-                }
+                }*/
 
 
             }
