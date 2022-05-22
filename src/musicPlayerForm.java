@@ -21,7 +21,6 @@ public class musicPlayerForm extends JFrame {
     private JLabel PlayState;
     private JLabel LoopState;
     private JLabel LoadState;
-    private JLabel Info;
     private JLabel LoadInfo;
     private JButton ResetLoadStateButton;
     private boolean loaded;
