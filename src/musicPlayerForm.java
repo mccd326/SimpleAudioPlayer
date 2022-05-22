@@ -71,9 +71,8 @@ public class musicPlayerForm extends JFrame {
         loadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
                 int result = fileChooser.showOpenDialog(PlayerPanel);
-                if (result == JFileChooser.APPROVE_OPTION){
+                if (result == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
                     if (loaded == true) {
                         try {
@@ -88,29 +87,9 @@ public class musicPlayerForm extends JFrame {
                         player.loadFile(selectedFile);
                         LoadState.setText(String.valueOf(loaded));
                     } catch (Exception ex) {
-                        System.out.println("Loading failed!");
-                        LoadState.setText("Loading failed!");
+                        throw new RuntimeException(ex);
                     }
                 }
-                /*filepath = String.valueOf(filepathTextField.getText());
-                if (loaded == true) {
-                    try {
-                        player.clip.stop();
-                        player.clip.setMicrosecondPosition(0);
-                        clipTimePosition = 0;
-                    } catch (Exception ex) {
-                    }
-                }
-                loaded = true;
-                try {
-                    player.loadMusic(filepath);
-                    LoadState.setText(String.valueOf(loaded));
-                } catch (Exception ex) {
-                    System.out.println("Loading failed!");
-                    LoadState.setText("Loading failed!");
-                }*/
-
-
             }
         });
 
